@@ -12,6 +12,15 @@
 
 ---
 
+## Examples
+
+| MobileNetV3 (Pre-trained) | Custom U-Net (Trained 8 Epochs) |
+|:---:|:---:|
+| ![MobileNetV3 Example](assets/example_1.png) | ![U-Net Example](assets/example_unet_1.png) |
+| *Identifies safe zones with high confidence* | *Refined mask boundaries for complex scenes* |
+
+---
+
 ## Overview
 
 AeroSeg is a computer vision pipeline designed for **autonomous UAV landing zone identification**. It uses semantic segmentation to classify aerial imagery into three categories:
