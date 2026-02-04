@@ -14,7 +14,7 @@
 
 ## Examples
 
-| MobileNetV3 (Pre-trained) | Custom U-Net (Trained 8 Epochs) |
+| MobileNetV3 (Pre-trained) | Custom U-Net  |
 |:---:|:---:|
 | ![MobileNetV3 Example](assets/example_1.png) | ![U-Net Example](assets/example_unet_1.png) |
 | *Identifies safe zones with high confidence* | *Refined mask boundaries for complex scenes* |
