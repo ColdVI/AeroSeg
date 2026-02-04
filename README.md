@@ -24,10 +24,13 @@ AeroSeg is a computer vision pipeline designed for **autonomous UAV landing zone
 
 ### Key Features
 
-- ⚡ **Low-latency inference** using MobileNetV3 backbone (~50ms on GPU)
+- ⚡ **Low-latency inference** using MobileNetV3 backbone or **Custom U-Net**
+- 🧠 **Custom U-Net Architecture** with attention gates for precise segmentation
 - 🎯 **Central ROI analysis** simulating UAV downward camera for landing zone focus
+- 📈 **Complete Training Pipeline** for Semantic Drone Dataset
 - 📊 **Safety scoring system** with configurable thresholds
 - 🖼️ Supports both **image and video** processing
+- 🚤 **Memory-efficient inference** with automatic resizing to prevent OOM
 - 🔧 **Modular architecture** for easy integration and extension
 
 ---
@@ -53,12 +56,17 @@ AeroSeg is a computer vision pipeline designed for **autonomous UAV landing zone
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Model Details
+### Model Options
 
-- **Backbone**: MobileNetV3-Large (optimized for mobile/edge deployment)
-- **Head**: DeepLabV3 (atrous spatial pyramid pooling)
-- **Pre-trained on**: COCO/VOC dataset (21 classes)
-- **Class mapping**: COCO classes → Safe/Hazard/Water categories
+- **MobileNetV3-Large**: (Default) Optimized for mobile/edge deployment, pre-trained on COCO.
+- **Custom U-Net**: (~24M parameters) Built from scratch with attention gates for high-accuracy segmentation.
+- **Light U-Net**: (~5M parameters) Lightweight variant designed for extreme edge devices.
+
+### Class Mapping
+The model maps complex indices to three simplified UAV categories:
+1. **SAFE**: Suitable landing surfaces.
+2. **HAZARD**: Obstacles (buildings, cars, trees, etc.).
+3. **WATER**: Water bodies.
 
 ---
 
@@ -108,8 +116,12 @@ python main.py --image aerial_view.jpg
 python main.py --image aerial_view.jpg --output result.png
 ```
 
-### Process Video
+### Run with Custom U-Net
+```bash
+python main.py --image aerial_view.jpg --model unet --checkpoint checkpoints_unet20/best.pth
+```
 
+### Process Video
 ```bash
 python main.py --video flight_footage.mp4 --output processed.mp4
 ```
@@ -165,10 +177,31 @@ The output image shows:
 ```
 AI-Project/
 ├── main.py           # CLI entry point
-├── model.py          # AeroSegModel class (DeepLabV3 wrapper)
+├── model.py          # AeroSegModel class (Inference wrapper)
+├── custom_model.py   # Custom U-Net architectures (UNet, LightUNet)
+├── train.py          # Training pipeline & dataset handling
 ├── processor.py      # ImageProcessor class (ROI + visualization)
-├── requirements.txt  # Dependencies
+├── download_data.py  # Script to download Semantic Drone Dataset
+├── organize_data.py  # Utility to structure the dataset
+├── requirements.txt  # Project dependencies
 └── README.md         # Documentation
+```
+
+---
+
+## Training
+
+The project includes a full training pipeline for the **Semantic Drone Dataset**.
+
+```bash
+# 1. Download data
+python download_data.py
+
+# 2. Organize data
+python organize_data.py --data ./data
+
+# 3. Start training (Custom U-Net)
+python train.py --data ./data --model unet --epochs 50
 ```
 
 ---
