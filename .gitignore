@@ -1,0 +1,31 @@
+# Data
+data/
+datasets/
+
+# ML Checkpoints
+checkpoints/
+checkpoints_unet/
+checkpoints_unet20/
+checkpoints_unet50/
+*.pth
+*.onnx
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# MacOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Results/Temp
+result_*.png
+uploaded_media_*
+sample_aerial.jpg
+kaggle.json
